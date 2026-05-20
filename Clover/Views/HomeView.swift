@@ -12,35 +12,47 @@ struct HomeView: View {
     @Query var clovers: [CloversFind]
 
     var body: some View {
-        NavigationView {
-            VStack {
-                Text("Clover Tracker")
-                    .font(.largeTitle)
+        TabView {
+            NavigationView {
+                VStack {
+                    Text("Clover Tracker")
+                        .font(.largeTitle)
+                        .padding()
+
+                    // Display running totals
+                    VStack(alignment: .leading) {
+                        Text("Running Totals:")
+                            .font(.headline)
+                        Text("4-leaf: \(clovers.filter { $0.leafCount == 4 }.reduce(0) { $0 + $1.quantity })")
+                        Text("5-leaf: \(clovers.filter { $0.leafCount == 5 }.reduce(0) { $0 + $1.quantity })")
+                        Text("6-leaf: \(clovers.filter { $0.leafCount == 6 }.reduce(0) { $0 + $1.quantity })")
+                    }
                     .padding()
 
-                // Display running totals
-                VStack(alignment: .leading) {
-                    Text("Running Totals:")
-                        .font(.headline)
-                    Text("4-leaf: \(clovers.filter { $0.leafCount == 4 }.reduce(0) { $0 + $1.quantity })")
-                    Text("5-leaf: \(clovers.filter { $0.leafCount == 5 }.reduce(0) { $0 + $1.quantity })")
-                    Text("6-leaf: \(clovers.filter { $0.leafCount == 6 }.reduce(0) { $0 + $1.quantity })")
-                }
-                .padding()
+                    Spacer()
 
-                Spacer()
-
-                // Log a Find button
-                NavigationLink(destination: LogFindView()) {
-                    Text("Log a Find")
-                        .font(.headline)
-                        .padding()
-                        .frame(maxWidth: .infinity)
-                        .background(Color.blue)
-                        .foregroundColor(.white)
-                        .cornerRadius(10)
+                    // Log a Find button
+                    NavigationLink(destination: LogFindView()) {
+                        Text("Log a Find")
+                            .font(.headline)
+                            .padding()
+                            .frame(maxWidth: .infinity)
+                            .background(Color.blue)
+                            .foregroundColor(.white)
+                            .cornerRadius(10)
+                    }
+                    .padding()
                 }
-                .padding()
+            }
+            .tabItem {
+                Label("Home", systemImage: "house")
+            }
+
+            NavigationView {
+                HistoryView()
+            }
+            .tabItem {
+                Label("History", systemImage: "clock")
             }
         }
     }

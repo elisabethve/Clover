@@ -12,8 +12,7 @@ import SwiftData
 struct CloverApp: App {
     var body: some Scene {
         WindowGroup {
-            HomeView()
-                .modelContainer(for: CloversFind.self)
+            ContentView()
         }
     }
 }
