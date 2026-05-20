@@ -6,12 +6,14 @@
 //
 
 import SwiftUI
+import SwiftData
 
 @main
 struct CloverApp: App {
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            HomeView()
+                .modelContainer(for: CloversFind.self)
         }
     }
 }
