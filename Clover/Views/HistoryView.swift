@@ -10,6 +10,7 @@ import SwiftData
 
 struct HistoryView: View {
     @Query(sort: \CloversFind.date, order: .reverse) var clovers: [CloversFind]
+    @Environment(\.modelContext) private var modelContext
 
     var body: some View {
         List {
@@ -34,9 +35,9 @@ struct HistoryView: View {
     private func deleteFind(at offsets: IndexSet) {
         for index in offsets {
             let clover = clovers[index]
-            clover.delete()
+            modelContext.delete(clover)
         }
-        try? clovers.modelContext?.save()
+        try? modelContext.save()
     }
 }
 
